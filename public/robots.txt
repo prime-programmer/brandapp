@@ -1,3 +1,73 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
 Disallow:
+
+
+const Form = () => {
+ const [name, setName] = useState('');
+ const [email, setEmail] = useState('');
+ const [message, setMessage] = useState(''); 
+ 
+ const form = useRef();
+ const handleSubmit = (e) => {
+    
+    e.preventDefault();
+    const contact = {name, email, message};
+
+    emailjs.sendForm('service_dznlgjs', 'template_la7ux2m', form.current, 'RzeErQ-ixPYwxpguW')
+    .then((result) => {
+        console.log(result.text);
+    }, (error) => {
+        console.log(error.text);
+    });
+ }
+  return (
+    <div className="bg-orange-900">
+     
+     <form  onSubmit={handleSubmit} className='flex flex-col p-5 max-w-2xl mx-auto mb-10'>
+            <h3 className=' text-3xl font-bold text-white'>Contact Us</h3>
+            <h4 className='text-lg text-white'>We will reply </h4>
+            <hr className='py-3 mt-2'/>
+
+            
+
+            <label className='block mb-5'>
+                <span className='text-white'>Name</span>
+                <input  
+                onChange={(e) => setName(e.target.value)}
+                value={name}
+                className='shadow border rounded py-2 px-3 
+                form-input mt-1 block w-full ring-green-500 outline-none focus:ring' 
+                placeholder='Name' type="text"/>
+            </label>
+            <label className='block mb-5'>
+                <span className='text-white'>Email</span>
+                <input 
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+                className='shadow border rounded py-2 px-3 form-input 
+                mt-1 block w-full ring-green-500 outline-none focus:ring' 
+                placeholder='your@email.com' type="email"/>
+            </label>
+            <label className='block mb-5'>
+                <span className='text-white'>Comment</span>
+                <textarea 
+               onChange={(e) => setMessage(e.target.value)}
+                value={message}
+                className='shadow border rounded py-2 px-3 
+                form-textarea mt-1 block w-full ring-green-500 outline-none focus:ring' 
+                placeholder='' rows={9}/>
+            </label>
+
+            {/*code returns error when validation fails */}
+
+           
+           <input type="submit" className="shadow bg-green-500 hover:bg-green-400 focus:shadow-outline
+           focus:outline-none text-white font-bold py-2 px-4 rounded cursor-pointer"/>
+           <p>{message}</p>
+        </form>
+    </div>
+  );
+}
+ 
+export default Form;
